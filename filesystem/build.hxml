@@ -1,0 +1,12 @@
+-main Watcher 
+-lib hxnodejs 
+-js hx-watcher.js 
+-D -js_es=6
+-dce full
+
+--next
+-main WatcherArgv 
+-lib hxnodejs 
+-js hx-watcher-argv.js 
+-D -js_es=6
+-dce full
