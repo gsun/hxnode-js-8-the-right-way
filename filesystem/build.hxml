@@ -5,8 +5,25 @@
 -dce full
 
 --next
+
 -main WatcherArgv 
 -lib hxnodejs 
 -js hx-watcher-argv.js 
+-D -js_es=6
+-dce full
+
+--next
+
+-main WatcherSpawn 
+-lib hxnodejs 
+-js hx-watcher-spawn.js 
+-D -js_es=6
+-dce full
+
+--next
+
+-main WatcherSpawnParse 
+-lib hxnodejs 
+-js hx-watcher-spawn-parse.js 
 -D -js_es=6
 -dce full
