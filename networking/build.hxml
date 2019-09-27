@@ -1,0 +1,12 @@
+-main NetWatcher 
+-lib hxnodejs 
+-js hx-net-watcher.js 
+-D -js_es=6
+-dce full
+
+--next
+-main NetWatcherUnix 
+-lib hxnodejs 
+-js hx-net-watcher-unix.js 
+-D -js_es=6
+-dce full
