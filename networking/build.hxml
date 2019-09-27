@@ -10,3 +10,31 @@
 -js hx-net-watcher-unix.js 
 -D -js_es=6
 -dce full
+
+--next
+-main NetWatcherJsonServer
+-lib hxnodejs 
+-js hx-net-watcher-json-server.js 
+-D -js_es=6
+-dce full
+
+--next
+-main NetWatcherJsonClient
+-lib hxnodejs 
+-js hx-net-watcher-json-client.js 
+-D -js_es=6
+-dce full
+
+--next
+-main TestJsonService
+-lib hxnodejs 
+-js hx-test-json-service.js 
+-D -js_es=6
+-dce full
+
+--next
+-main NetWatcherLdjClient
+-lib hxnodejs 
+-js hx-net-watcher-ldj-client.js 
+-D -js_es=6
+-dce full
