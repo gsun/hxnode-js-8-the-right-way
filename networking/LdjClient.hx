@@ -1,7 +1,6 @@
 import js.node.events.EventEmitter;
-import js.node.net.Socket;
 class LdjClient extends EventEmitter<LdjClient> {
-    public function new(stream:Socket) {
+    public function new(stream:IEventEmitter) {
         super();
         var buffer = '';
         stream.on('data', (data) -> {
@@ -15,7 +14,7 @@ class LdjClient extends EventEmitter<LdjClient> {
           }
         });
     }
-    static function connect(stream:Socket) {
+    static function connect(stream:IEventEmitter) {
         return new LdjClient(stream);
     }
 }

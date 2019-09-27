@@ -38,3 +38,11 @@
 -js hx-net-watcher-ldj-client.js 
 -D -js_es=6
 -dce full
+
+--next
+-main TestAll
+-lib hxnodejs 
+-lib utest
+-js hx-test-all.js 
+-D -js_es=6
+-dce full
