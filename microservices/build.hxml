@@ -1,0 +1,14 @@
+-main RedisWatcherPub 
+-lib hxnodejs 
+-lib hxnodejs-redis
+-js hx-redis-watcher-pub.js 
+-D -js_es=6
+-dce full
+
+--next
+-main RedisWatcherSub
+-lib hxnodejs 
+-lib hxnodejs-redis
+-js hx-redis-watcher-sub.js 
+-D -js_es=6
+-dce full
