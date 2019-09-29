@@ -12,3 +12,17 @@
 -js hx-redis-watcher-sub.js 
 -D -js_es=6
 -dce full
+
+--next
+-main ZmqWatcherPub
+-lib hxnodejs 
+-js hx-zmq-watcher-pub.js 
+-D -js_es=6
+-dce full
+
+--next
+-main ZmqWatcherSub
+-lib hxnodejs 
+-js hx-zmq-watcher-sub.js 
+-D -js_es=6
+-dce full
