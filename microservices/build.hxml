@@ -40,3 +40,17 @@
 -js hx-zmq-filer-req.js 
 -D -js_es=6
 -dce full
+
+--next
+-main ZmqFilerReqLoop
+-lib hxnodejs 
+-js hx-zmq-filer-req-loop.js 
+-D -js_es=6
+-dce full
+
+--next
+-main ZmqFilerRepCluster
+-lib hxnodejs 
+-js hx-zmq-filer-rep-cluster.js 
+-D -js_es=6
+-dce full
