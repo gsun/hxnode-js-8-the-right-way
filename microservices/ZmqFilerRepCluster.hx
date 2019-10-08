@@ -3,7 +3,6 @@ import js.node.buffer.Buffer;
 import js.node.Fs;
 import js.Node.process;
 import js.node.Cluster.instance as cluster;
-import js.node.cluster.Worker;
 import js.node.Os;
 
 class ZmqFilerRepCluster {
@@ -31,17 +30,17 @@ class ZmqFilerRepCluster {
             }
             
         } else {
-        }
-        var responder = new Zeromq.Socket('rep');
-        responder.on('message', (data) -> {
-            var request = haxe.Json.parse(data);
-            trace('Received request to get: ${request.path}');
-            Fs.readFile(request.path, (err, content) -> {
-                trace('Sending response content.');
-                var message = haxe.Json.stringify({content:content.toString(), timestamp:Date.now(), pid:process.pid});
-                responder.send(Buffer.from(message, 'utf8'));
+            var responder = new Zeromq.Socket('rep');
+            responder.on('message', (data) -> {
+                var request = haxe.Json.parse(data);
+                trace('Received request to get: ${request.path}');
+                Fs.readFile(request.path, (err, content) -> {
+                    trace('Sending response content.');
+                    var message = haxe.Json.stringify({content:content.toString(), timestamp:Date.now(), pid:process.pid});
+                    responder.send(Buffer.from(message, 'utf8'));
+                });
             });
-        });
-        responder.connect('ipc://filer-dealer.ipc');
+            responder.connect('ipc://filer-dealer.ipc');
+        }
     }
 }
