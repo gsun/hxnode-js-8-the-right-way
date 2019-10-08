@@ -26,3 +26,17 @@
 -js hx-zmq-watcher-sub.js 
 -D -js_es=6
 -dce full
+
+--next
+-main ZmqFilerRep
+-lib hxnodejs 
+-js hx-zmq-filer-rep.js 
+-D -js_es=6
+-dce full
+
+--next
+-main ZmqFilerReq
+-lib hxnodejs 
+-js hx-zmq-filer-req.js 
+-D -js_es=6
+-dce full

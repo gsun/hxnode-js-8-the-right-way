@@ -14,6 +14,6 @@ class ZmqWatcherPub {
             var message = haxe.Json.stringify({type: 'changed', file: filename, timestamp: Date.now()});
             publisher.send(Buffer.from(message, 'utf8'));
         });
-		publisher.bind('tcp://*:60400');
+        publisher.bind('tcp://*:60400');
     }
 }
