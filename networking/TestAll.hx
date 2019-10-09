@@ -23,7 +23,7 @@ class TestCase1 extends utest.Test {
     }
       
     @:timeout(1000)
-        public function teardown() {
+    public function teardown() {
     }
 
 }
