@@ -1,0 +1,6 @@
+-main TestAll 
+-lib hxnodejs 
+-lib utest
+-js test-all.js 
+-D -js_es=6
+-dce full
