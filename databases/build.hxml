@@ -11,3 +11,10 @@
 -js hx-rdf-to-json.js 
 -D -js_es=6
 -dce full
+
+--next
+-main RdfToBulk 
+-lib hxnodejs 
+-js hx-rdf-to-bulk.js 
+-D -js_es=6
+-dce full
