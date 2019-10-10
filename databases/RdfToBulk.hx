@@ -23,8 +23,8 @@ class RdfToBulk {
                 if (Path.extname(path) == ".rdf") {
                     var pg = Fs.readFileSync(path, {encoding:'utf8'});
                     var rdf = new ParseRdf(pg);
-                    var j = haxe.Json.stringify(rdf, null, ' ');
-                    trace(j);
+                    Sys.println(haxe.Json.stringify({ index: { _id: 'pg${rdf.id}' } }));
+                    Sys.println(haxe.Json.stringify(rdf, null, ' '));
                 }
             }
         } catch (e:String) {
