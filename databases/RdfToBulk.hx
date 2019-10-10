@@ -1,6 +1,7 @@
 import js.node.Fs;
 import js.node.Path;
 import js.lib.Error;
+import js.Node.console;
 
 class RdfToBulk {
     static function main() {
@@ -23,8 +24,8 @@ class RdfToBulk {
                 if (Path.extname(path) == ".rdf") {
                     var pg = Fs.readFileSync(path, {encoding:'utf8'});
                     var rdf = new ParseRdf(pg);
-                    Sys.println(haxe.Json.stringify({ index: { _id: 'pg${rdf.id}' } }));
-                    Sys.println(haxe.Json.stringify(rdf, null, ' '));
+                    console.log(haxe.Json.stringify({ index: { _id: 'pg${rdf.id}' } }));
+                    console.log(haxe.Json.stringify(rdf, null, ' '));
                 }
             }
         } catch (e:String) {
