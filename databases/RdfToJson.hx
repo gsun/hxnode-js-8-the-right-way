@@ -1,6 +1,5 @@
 import js.node.Fs;
 import js.Node.console;
-import js.Node.console;
 
 class RdfToJson {
     static function main() {

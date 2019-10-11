@@ -1,0 +1,7 @@
+-main Esclu 
+-lib hxnodejs 
+-lib hxnodejs-commander
+-lib hxnodejs-elasticsearch
+-js hx-esclu.js 
+-D -js_es=6
+-dce full
