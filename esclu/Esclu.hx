@@ -128,33 +128,33 @@ class Esclu {
                   log: 'trace'
                 });
                 var readLine = Readline.createInterface({
-					input: Fs.createReadStream( file )
-				});
-				var lineNo = 0;
-				var idx:Dynamic;
-				readLine.on('line', (line) -> {
-				    if (lineNo % 2 == 0) {
-					    idx = line;
-					} else {
-					    var p = haxe.Json.parse(idx);
-						client.index({
-							index: p.index.index,
-							type: p.index.type,
-							id: p.index._id,
-							body: haxe.Json.parse(line)
-						}, function(error, result) {
-						  if (error != null) {
-							  console.log('elasticsearch cluster is down');
-						  } else {
-							  console.log(result);
-						  }
-						});
-					}
-					lineNo++;
-				});
-				readLine.on('close', () -> { 
-					console.log('bulk ${file} complete');
-				});
+                    input: Fs.createReadStream( file )
+                });
+                var lineNo = 0;
+                var idx:Dynamic;
+                readLine.on('line', (line) -> {
+                    if (lineNo % 2 == 0) {
+                        idx = line;
+                    } else {
+                        var p = haxe.Json.parse(idx);
+                        client.index({
+                            index: p.index.index,
+                            type: p.index.type,
+                            id: p.index._id,
+                            body: haxe.Json.parse(line)
+                        }, function(error, result) {
+                          if (error != null) {
+                              console.log('elasticsearch cluster is down');
+                          } else {
+                              console.log(result);
+                          }
+                        });
+                    }
+                    lineNo++;
+                });
+                readLine.on('close', () -> { 
+                    console.log('bulk ${file} complete');
+                });
           });
 
         program
