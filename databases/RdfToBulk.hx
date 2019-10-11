@@ -24,8 +24,8 @@ class RdfToBulk {
                 if (Path.extname(path) == ".rdf") {
                     var pg = Fs.readFileSync(path, {encoding:'utf8'});
                     var rdf = new ParseRdf(pg);
-                    console.log(haxe.Json.stringify({ index: { _id: 'pg${rdf.id}' } }));
-                    console.log(haxe.Json.stringify(rdf, null, ' '));
+                    console.log(haxe.Json.stringify({ index: { index: 'books', type: 'books', _id: 'pg${rdf.id}' } }));
+                    console.log(haxe.Json.stringify(rdf));
                 }
             }
         } catch (e:String) {
