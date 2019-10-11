@@ -2,6 +2,8 @@ import js.Node.process;
 import js.Node.console;
 import js.npm.Commander.root as program;
 import js.npm.elasticsearch.Client;
+import js.node.Readline;
+import js.node.Fs;
 
 class Esclu {
     static function main() {
@@ -121,7 +123,38 @@ class Esclu {
           .command('bulk <file>')
           .description('read and perform bulk options from the specified file')
           .action((file) -> {
-                console.log('file ${file}');
+                var client = new Client({
+                  host: '${program.host}:${program.port}',
+                  log: 'trace'
+                });
+                var readLine = Readline.createInterface({
+					input: Fs.createReadStream( file )
+				});
+				var lineNo = 0;
+				var idx:Dynamic;
+				readLine.on('line', (line) -> {
+				    if (lineNo % 2 == 0) {
+					    idx = line;
+					} else {
+					    var p = haxe.Json.parse(idx);
+						client.index({
+							index: p.index.index,
+							type: p.index.type,
+							id: p.index._id,
+							body: haxe.Json.parse(line)
+						}, function(error, result) {
+						  if (error != null) {
+							  console.log('elasticsearch cluster is down');
+						  } else {
+							  console.log(result);
+						  }
+						});
+					}
+					lineNo++;
+				});
+				readLine.on('close', () -> { 
+					console.log('bulk ${file} complete');
+				});
           });
 
         program
