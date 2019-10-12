@@ -3,3 +3,11 @@
 -js hx-web-server.js 
 -D -js_es=6
 -dce full
+
+--next
+-main HelloServer 
+-lib hxnodejs 
+-lib haxe-js-kit
+-js hx-hello-server.js 
+-D -js_es=6
+-dce full
