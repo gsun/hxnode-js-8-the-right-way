@@ -11,3 +11,12 @@
 -js hx-hello-server.js 
 -D -js_es=6
 -dce full
+
+--next
+-main B4Server 
+-lib hxnodejs 
+-lib haxe-js-kit
+-lib hxnodejs-elasticsearch
+-js hx-b4-server.js 
+-D -js_es=6
+-dce full
