@@ -1,0 +1,5 @@
+-main WebServer 
+-lib hxnodejs 
+-js hx-web-server.js 
+-D -js_es=6
+-dce full
