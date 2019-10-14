@@ -5,6 +5,7 @@ import js.npm.NodeEnvFile;
 import js.Node.process;
 import js.lib.Error;
 import js.npm.elasticsearch.Client;
+import js.lib.Promise;
 using Lambda;
 
 class B4Server {
@@ -21,10 +22,6 @@ class B4Server {
         });
         
         app.get('/api/search/books/:field/:query', (req, res) -> {
-            var client = new Client({
-                host: '${process.env["es_host"]}:${process.env["es_port"]}',
-                log: 'trace'
-            });
             var esReq = haxe.Json.parse('{
                 "index" : "books",
                 "body" : {
@@ -35,7 +32,11 @@ class B4Server {
                     }
                 }
             }');
-            client.search(esReq, function(error, esRes:SearchResult<Dynamic>) {
+            var client = new Client({
+                host: '${process.env["es_host"]}:${process.env["es_port"]}',
+                log: 'trace'
+            });
+            client.search(esReq, (error, esRes:SearchResult<Dynamic>) -> {
                 if (error != null) {
                     res.status(502);
                     return;
@@ -43,6 +44,41 @@ class B4Server {
                     res.status(200).json([for (hit in esRes.hits.hits) {_source : hit._source}]);
                 }
             });
+        });
+        
+        app.get('/api/search/suggests/:field/:query', (req, res) -> {
+            var esReq = haxe.Json.parse('{
+                "index" : "books",
+                "body" : {
+                    "query" : {
+                        "term" : {
+                            "${req.params.field}" : "${req.params.query}"
+                        }
+                    }
+                }
+            }');
+            var p = new Promise((resolve, reject) -> {
+                var client = new Client({
+                    host: '${process.env["es_host"]}:${process.env["es_port"]}',
+                    log: 'trace'
+                });
+                client.search(esReq, (error, esRes:SearchResult<Dynamic>) -> {
+                    if (error != null) {
+                        reject(error);
+                        return;
+                    } else {
+                        resolve(esRes);
+                    }
+                });
+            });
+            p.then((esRes) -> {
+                        res.status(200).json([for (hit in esRes.hits.hits) {_source : hit._source}]);
+                        return;
+                    },
+                    (err) -> {
+                        res.status(502);
+                        return;
+                    });
         });
         
         app.listen(Std.parseInt(process.env["port"]), () -> console.log('Ready.'));
