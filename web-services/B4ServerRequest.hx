@@ -22,26 +22,26 @@ class B4ServerRequest {
         });
         
         app.get('/api/search/books/:field/:query', (req, res) -> {
-		    var path = 'http://${process.env["es_host"]}:${process.env["es_port"]}/${process.env["books_index"]}/_search';
-			var options = haxe.Json.parse('{
+            var path = 'http://${process.env["es_host"]}:${process.env["es_port"]}/${process.env["books_index"]}/_search';
+            var options = haxe.Json.parse('{
                 "url" : "${path}",
                 "josn" : "true",
-				"query" : {
-					"match" : {
-						"${req.params.field}" : "${req.params.query}"
-					}
-				}   
+                "query" : {
+                    "match" : {
+                        "${req.params.field}" : "${req.params.query}"
+                    }
+                }   
             }');
-			Request.debug = true;
-			var r = Request.construct();
-			r.get(options, (err, esRes, esResBody) -> {
-			  if (err != null) {
-				res.status(502);
-				return;
-			  }
-			  var p:{hits:{hits:Array<{_source:Dynamic}>}} = haxe.Json.parse(esResBody);
-			  res.status(200).json([for (hit in p.hits.hits) {_source : hit._source}]);
-			});
+            Request.debug = true;
+            var r = Request.construct();
+            r.get(options, (err, esRes, esResBody) -> {
+              if (err != null) {
+                res.status(502);
+                return;
+              }
+              var p:{hits:{hits:Array<{_source:Dynamic}>}} = haxe.Json.parse(esResBody);
+              res.status(200).json([for (hit in p.hits.hits) {_source : hit._source}]);
+            });
         });
         
         app.listen(Std.parseInt(process.env["port"]), () -> console.log('Ready.'));
