@@ -5,3 +5,12 @@
 -js hx-esclu.js 
 -D -js_es=6
 -dce full
+
+--next
+-main EscluRequest 
+-lib hxnodejs 
+-lib hxnodejs-commander
+-lib haxe-js-kit
+-js hx-esclu-request.js 
+-D -js_es=6
+-dce full
