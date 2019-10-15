@@ -20,3 +20,11 @@
 -js hx-b4-server.js 
 -D -js_es=6
 -dce full
+
+--next
+-main B4ServerRequest 
+-lib hxnodejs 
+-lib haxe-js-kit
+-js hx-b4-server-request.js 
+-D -js_es=6
+-dce full
