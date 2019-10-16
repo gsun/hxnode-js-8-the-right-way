@@ -25,7 +25,7 @@ class B4ServerRequest {
             var path = 'http://${process.env["es_host"]}:${process.env["es_port"]}/${process.env["books_index"]}/_search';
             var options = haxe.Json.parse('{
                 "url" : "${path}",
-                "josn" : "true",
+                "json" : true,
                 "query" : {
                     "match" : {
                         "${req.params.field}" : "${req.params.query}"
@@ -39,7 +39,7 @@ class B4ServerRequest {
                 res.status(502);
                 return;
               }
-              var p:{hits:{hits:Array<{_source:Dynamic}>}} = haxe.Json.parse(esResBody);
+              var p:{hits:{hits:Array<{_source:Dynamic}>}} = cast esResBody;
               res.status(200).json([for (hit in p.hits.hits) {_source : hit._source}]);
             });
         });

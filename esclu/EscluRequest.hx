@@ -78,14 +78,14 @@ class EscluRequest {
         program
           .command('bulk <file>')
           .description('read and perform bulk options from the specified file')
-		  .option('-i, --index <name>', 'which index to use')
+          .option('-i, --index <name>', 'which index to use')
           .option('-t, --type <type>', 'default type for bulk operations')
           .action((file, options) -> {
-			if (options.index == null || options.type == null) {
-			  var msg = 'No index specified! Use --index <name>';
-			  if (!program.json) throw new js.lib.Error(msg);
-			  console.log(haxe.Json.stringify({error: msg}));
-			}
+            if (options.index == null || options.type == null) {
+              var msg = 'No index specified! Use --index <name>';
+              if (!program.json) throw new js.lib.Error(msg);
+              console.log(haxe.Json.stringify({error: msg}));
+            }
             Fs.stat(file, (err, stats) -> {
               if (err != null) {
                 if (program.json) {
