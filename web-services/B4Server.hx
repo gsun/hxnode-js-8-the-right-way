@@ -46,7 +46,7 @@ class B4Server {
             });
         });
         
-        app.get('/api/search/suggests/:field/:query', (req, res) -> {
+        app.get('/api/suggests/:field/:query', (req, res) -> {
             var esReq = haxe.Json.parse('{
                 "index" : "books",
                 "body" : {

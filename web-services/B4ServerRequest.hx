@@ -26,11 +26,13 @@ class B4ServerRequest {
             var options = haxe.Json.parse('{
                 "url" : "${path}",
                 "json" : true,
-                "query" : {
-                    "match" : {
-                        "${req.params.field}" : "${req.params.query}"
-                    }
-                }   
+                "body" : {
+                    "query" : {
+                        "match" : {
+                            "${req.params.field}" : "${req.params.query}"
+                        }
+                    }   
+                }
             }');
             Request.debug = true;
             var r = Request.construct();
@@ -42,6 +44,42 @@ class B4ServerRequest {
               var p:{hits:{hits:Array<{_source:Dynamic}>}} = cast esResBody;
               res.status(200).json([for (hit in p.hits.hits) {_source : hit._source}]);
             });
+        });
+        
+        app.get('/api/suggests/:field/:query', (req, res) -> {
+            var path = 'http://${process.env["es_host"]}:${process.env["es_port"]}/${process.env["books_index"]}/_search';
+            var options = haxe.Json.parse('{
+                "url" : "${path}",
+                "json" : true,
+                "body" : {
+                    "query" : {
+                        "term" : {
+                            "${req.params.field}" : "${req.params.query}"
+                        }
+                    }   
+                }
+            }');
+            var p = new Promise((resolve, reject) -> {
+                Request.debug = true;
+                var r = Request.construct();
+                r.get(options, (err, esRes, esResBody) -> {
+                  if (err != null) {
+                      reject(err);
+                      return;
+                  } else {
+                      resolve(esResBody);
+                  }
+                });
+            });
+            p.then((esRes) -> {
+                        var p:{hits:{hits:Array<{_source:Dynamic}>}} = cast esRes;
+                        res.status(200).json([for (hit in p.hits.hits) {_source : hit._source}]);
+                        return;
+                    },
+                    (err) -> {
+                        res.status(502);
+                        return;
+                    });
         });
         
         app.listen(Std.parseInt(process.env["port"]), () -> console.log('Ready.'));
